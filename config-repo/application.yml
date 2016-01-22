@@ -28,4 +28,4 @@ eureka:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
   client:
     serviceUrl:
-      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://${PREFIX:}eureka.${APPLICATION_DOMAIN:cfapps.io}}/eureka/
+      defaultZone: ${vcap.services.eureka.credentials.uri:127.0.0.1:8761}/eureka/
