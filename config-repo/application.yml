@@ -3,10 +3,6 @@ info:
   application: RentMe connected trucks Demo
   show: Spring One 2GX 2015
 
-logging:
-  level:
-    com.netflix.discovery: 'OFF'
-
 endpoints:
   restart: enabled
 
