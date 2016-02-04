@@ -55,27 +55,31 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 ### create user provided service
 
-
     # in mysql, set user and give privileges
     use mysql;
     grant all privileges on *.* to root@'%' with grant option;
     set password for root@'%' = password('changeme');
 
 **mysql-db**
+
     $ cf create-user-provided-service mysql-db -p '{"uri":"mysql://root:changeme@MYSQL_IP:3306/fleet"}'
 
 **mongodb**
+
     $ cf cups mongodb -p '{"uri":"mongodb://MONGO_DB_IP:27017/locations"}'
 
 **rabbitmq**
+
     don't forget to the postfix '%2f'. see https://www.rabbitmq.com/uri-spec.html
 
     $ cf cups rabbitmq -p '{"uri":"amqp://guest:guest@192.168.67.2:5672/%2f"}'
 
-** config server **
+**config server**
+
     $ cf cups configserver -p  '{"uri":"http://configserver.local.micropcf.io/"}'
 
-** eureka **
+**eureka**
+
     $ cf cups configserver -p  '{"uri":"http://fleet-eureka-server.local.micropcf.io/"}'
 
 ## deploy fleet services
@@ -148,12 +152,13 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 If you go to the Eureka Dashboard, you should see all services registered and running:
 
 http://fleet-eureka-server.local.micropcf.io/
-    DASHBOARD
-    FLEET-LOCATION-INGEST
-    FLEET-LOCATION-SERVICE
-    FLEET-LOCATION-SIMULATOR
-    FLEET-LOCATION-UPDATER
-    SERVICE-LOCATION-SERVICE
+
+* DASHBOARD
+* FLEET-LOCATION-INGEST
+* FLEET-LOCATION-SERVICE
+* FLEET-LOCATION-SIMULATOR
+* FLEET-LOCATION-UPDATER
+* SERVICE-LOCATION-SERVICE
 
 Please ensure all services started successfully. Next, start the simulation using the `service-location-simulator` application,
 
