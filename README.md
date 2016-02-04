@@ -11,6 +11,7 @@ the repairs. Service stations can be shown on the map by selecting a
 menu item.
 
 original document is here(https://github.com/springone2gx2015/vehicle-fleet-demo)
+screen shots
 
 ![dashboard](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/dashboard.png)
 ![rabbitmq](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/rabbitmq.png)
