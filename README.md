@@ -152,7 +152,12 @@ http://fleet-eureka-server.local.micropcf.io/
 
 Please ensure all services started successfully. Next, start the simulation using the `service-location-simulator` application,
 
-    $ scripts/load.sh
+    $ cd scripts
+    $ load.sh
+    Loading data...
+    Starting simulator...
+    **** Vehicle Fleet Demo is running on http://fleet-dashboard.local.micropcf.io
+
 
 
 to see rabbitmq status
