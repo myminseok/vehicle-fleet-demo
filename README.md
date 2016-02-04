@@ -62,9 +62,12 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 ### create user provided service
 
     # in mysql, set user and give privileges
+
     use mysql;
     grant all privileges on *.* to root@'%' with grant option;
     set password for root@'%' = password('changeme');
+
+    create database fleet;
 
 **mysql-db**
 
@@ -107,7 +110,8 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 ### deploying
 
-     visit each module directory and run 'cf push'
+    visit each module directory and run 'cf push'.
+    make sure there is no error by monitoring 'cf logs'
 
 	$ cd platform/configserver
 	$ cf push
