@@ -1,7 +1,8 @@
 applications:
 - name: fleet-location-ingest
-  memory: 378MB
+  memory: 512MB
   path: target/fleet-location-ingest-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
   services:
     - rabbitmq
 #    - zipkin

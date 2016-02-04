@@ -15,3 +15,11 @@ ribbon:
 fleet-location-ingest:
   ribbon:
     listOfServers: localhost:9006
+
+---
+spring:
+  profile: cloud
+
+security:
+  basic:
+    enabled: false

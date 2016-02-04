@@ -1,0 +1,7 @@
+applications:
+- name: fleet-hystrix-dashboard
+  memory: 378MB
+  path: target/fleet-hystrix-dashboard-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
+  services:
+    - configserver

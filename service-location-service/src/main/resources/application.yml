@@ -4,4 +4,7 @@ server:
 spring:
   application:
     name: service-location-service
-  
+
+security:
+  basic:
+    enabled: false

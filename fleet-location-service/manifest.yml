@@ -2,10 +2,9 @@ applications:
 - name: fleet-location-service
   memory: 768MB
   path: target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
   services:
     - mysql-db
 #    - zipkin
     - configserver
     - eureka
-env:
-    CF_TARGET: https://api.local.micropcf.io

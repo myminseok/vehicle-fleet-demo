@@ -3,3 +3,10 @@ server:
 spring:
   application:
     name: fleet-location-service
+  jpa:
+    generate-ddl: true
+    hibernate.ddl-auto: create
+
+security:
+  basic:
+    enabled: false

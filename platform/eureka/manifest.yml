@@ -2,6 +2,7 @@ applications:
 - name: fleet-eureka-server
   memory: 378MB
   path: target/fleet-eureka-server-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
   env:
       CF_TARGET: https://api.local.micropcf.io
   services:

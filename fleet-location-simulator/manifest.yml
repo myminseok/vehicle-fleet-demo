@@ -2,6 +2,7 @@ applications:
 - name: fleet-location-simulator
   memory: 512MB
   path: target/fleet-location-simulator-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
   services:
     - rabbitmq
 #    - zipkin

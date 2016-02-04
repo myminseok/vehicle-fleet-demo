@@ -10,164 +10,160 @@ need a service are shown in orange or red depending on the urgency of
 the repairs. Service stations can be shown on the map by selecting a
 menu item.
 
-## Architecture
+original document is here(https://github.com/springone2gx2015/vehicle-fleet-demo)
 
-![Architecture Diagram](https://raw.githubusercontent.com/springone2gx2015/vehicle-fleet-demo/master/architecture.png)
 
-## Building from Source
+## deploy to micropcf
 
-This application uses a [Maven][]-based build system. Please ensure
-Java 8 is installed and use the wrapper script (`mvnw` in the root of
-the project).
+### prepare micropcf
 
-### Prerequisites
+download https://github.com/pivotal-cf/micropcf and follow instruction.
 
-* [Git][]
-* [JDK 8][]
+you need to increase memory to 8192MB by editing Vagrantfile.
+
+    else
+        cpus ||= 2
+        max_memory ||=  8192
+      end
+
+      memory = [[2048, max_memory / 2].max, 8192].min
+
+      {memory: memory / 4 * 4, cpus: cpus, max_memory: max_memory}
+    end
+
+
+### prepare external service
+
 * [MongoDB][]
 * [RabbitMQ][]
+* MYSQL
+    vi my.conf
+    bind-address = IP_ADDR_MYSQL_SERVER
 
-> NOTE: You can run the middleware in docker containers using
-> docker-compose (works best on a Linux host because otherwise you
-> need to configure the host because it isn't localhost with
-> boot2docker).
+
+
+
+### open outbound connectivity from container to external service
+    vi securityfile
+    [{"destination": "0.0.0.0-255.255.255.255","protocol": "all"}]
+
+    cf create-security-group open_all securityfile
+    cf bind-security-group open_all micropcf-org micropcf-space
+    cf bind-staging-security-group open_all
+    cf bind-running-security-group  open_all
+
+
+### create user provided service
+
+
+    # in mysql, set user and give privileges
+    use mysql;
+    grant all privileges on *.* to root@'%' with grant option;
+    set password for root@'%' = password('changeme');
+
+**mysql-db**
+    $ cf create-user-provided-service mysql-db -p '{"uri":"mysql://root:changeme@MYSQL_IP:3306/fleet"}'
+
+**mongodb**
+    $ cf cups mongodb -p '{"uri":"mongodb://MONGO_DB_IP:27017/locations"}'
+
+**rabbitmq**
+    don't forget to the postfix '%2f'. see https://www.rabbitmq.com/uri-spec.html
+
+    $ cf cups rabbitmq -p '{"uri":"amqp://guest:guest@192.168.67.2:5672/%2f"}'
+
+** config server **
+    $ cf cups configserver -p  '{"uri":"http://configserver.local.micropcf.io/"}'
+
+** eureka **
+    $ cf cups configserver -p  '{"uri":"http://fleet-eureka-server.local.micropcf.io/"}'
+
+## deploy fleet services
 
 ### Check out sources
 
-	$ git clone https://github.com/springone2gx2015/vehicle-fleet-demo.git
+	$ git clone https://github.com/myminseok/vehicle-fleet-demo.git
     $ cd vehicle-fleet-demo
 
+
 ### Compile, test and build all jars
+    you need java8
 
 	$ ./mvnw clean install
 
-## Running
 
-Each of the projects has a jar file in its `target/` directory. Run it
-with `java -jar`. There are `platform` services (in `platform/*`) that
-are needed if you run the application in the "default" profile. You
-can run locally without them if you use the "test" profile
-(e.g. `--spring.profiles.active=test` on the command line). In Cloud
-Foundry the platform services are provided by Spring Cloud Services
-(available as a tile in PCF).
+### deploying
 
-### Locally
+     visit each module directory and run folling
+     cf push
 
-| Module                     | Dashboard URL                   |
-|----------------------------|---------------------------------|
-| Eureka                     | http://localhost:8761/          |
-| Config Server              | http://localhost:8888/          |
-| fleet-location-service     | http://localhost:9000/          |
-| service-location-service   | http://localhost:9001/          |
-| fleet-location-simulator   | http://localhost:9005/          |
-| fleet-location-ingest      | http://localhost:9006/          |
-| fleet-location-updater     | http://localhost:9007/          |
-| RabbitMQ                   | http://localhost:15672/         |
-| MongoDB                    | http://localhost:27017/         |
-| Dashboard                  | http://localhost:8080/          |
+**config server**
 
-In order to run the entire application locally please execute the following steps:
+	$ cd platform/configserver
+	$ cf push
 
-Please ensure that you have running:
+**Eureka**
 
-* Rabbit - for the simulator, ingest and updater components
-* Mongo - for the service-location-service
+	$ cd platform/eureka
+	$ cf push
 
-#### Use The Start Script
+**hystrix-dashboard**
 
-to run all services on localhost:
-
-    $ scripts/startAll.sh
-
-to stop:
-
-    $ scripts/stopAll.sh
-	
-#### Start Manually	  
-
-> NOTE: the dashboard UI can run on it's own with just the
-> `fleet-location-service` and `service-location-service` (if you run
-> in a "test" profile) and with those 2 plus eureka (in the "default"
-> profile).
-
-**Start Eureka**
-
-	$ java -jar platform/eureka/target/fleet-eureka-server-0.0.1-SNAPSHOT.jar
+	$ cd platform/hystrix-dashboard
+	$ cf push
 
 **fleet-location-simulator**
 
-	$ java -jar fleet-location-simulator/target/fleet-location-simulator-1.0.0.BUILD-SNAPSHOT.jar
+	$ cd fleet-location-simulator
+	$ cf push
 
 **fleet-location-ingest**
 
-	$ java -jar fleet-location-ingest/target/fleet-location-ingest-1.0.0.BUILD-SNAPSHOT.jar
+	$ cd fleet-location-ingest
+	$ cf push
 
 **fleet-location-updater**
 
-	$ java -jar fleet-location-updater/target/fleet-location-updater-1.0.0.BUILD-SNAPSHOT.jar
+    $ cd fleet-location-updater
+    $ cf push
 
 **fleet-location-service**
 
-	$ java -jar fleet-location-service/target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
-	$ wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/fleet.json
-	$ curl -H "Content-Type: application/json" localhost:9000/fleet -d @fleet.json
+	$ cd fleet-location-service
+	$ cf push
 
 **service-location-service**
 
-	$ java -jar service-location-service/target/service-location-service-1.0.0.BUILD-SNAPSHOT.jar
-	$ wget http://assets.springone2gx2015.s3.amazonaws.com/fleet/serviceLocations.json
-	$ curl -H "Content-Type: application/json" localhost:9001/bulk/serviceLocations -d @serviceLocations.json
+	$ cd service-location-service
+	$ cf push
 
 **dashboard**
 
-	$ java -jar dashboard/target/dashboard-1.0.0.BUILD-SNAPSHOT.jar
+	$ cd dashboard
+	$ cf push
+
+
+#### Start Demo by Script
 
 If you go to the Eureka Dashboard, you should see all services registered and running:
 
-http://localhost:8761/
+http://fleet-eureka-server.local.micropcf.io/
+    DASHBOARD
+    FLEET-LOCATION-INGEST
+    FLEET-LOCATION-SERVICE
+    FLEET-LOCATION-SIMULATOR
+    FLEET-LOCATION-UPDATER
+    SERVICE-LOCATION-SERVICE
 
-Please ensure all services started successfully. Next, start the simulation using
-the `service-location-simulator` application, either through the simple UI at http://localhost:9005/
-or by executing:
+Please ensure all services started successfully. Next, start the simulation using the `service-location-simulator` application,
 
-	$ curl http://localhost:9005/api/dc
+    $ scripts/load.sh
 
-You should now be able to see the moving vehicles inside the main `Dashboard` application:
 
-http://localhost:8080/
+to see rabbitmq
 
-### Dynamic Config Changes when running locally
+    http://rabbitmq_ip:15672/
 
-The **fleet-location-updater** makes calls to **service-location-service** and uses
-[Hystrix][] to provide fault tolerance. [Hystrix][] can be fine-tuned using various properties:
+to see dashboard
 
-https://github.com/Netflix/Hystrix/wiki/Configuration
-
-In conjunction with [Spring Cloud Config][], you can changes those properties at runtime as well.
-
-Please ensure that you have **Config Server** running. Also, in order to simplify things,
-you may want to point directly to a local [Git][] with the configuration settings used by **Config Server**.
-
-E.g. in `vehicle-fleet-demo/platform/configserver/src/main/resources/application.yml`
-change the value of property `spring.cloud.config.server.git.uri` to your local repo such as:
-`file://${HOME}/dev/git/vehicle-fleet-demo`.
-
-In `vehicle-fleet-demo/config-repo/fleet-location-updater.yml` we define a property
-`hystrix.command.default.circuitBreaker.forceOpen: false`. By setting this property to `true`
-we can simulate a failure and consequently the [Hystrix][] `fallbackMethod` `handleServiceLocationServiceFailure` will
-be called in `DefaultServiceLocationService`, even though the **service-location-service** may still be running fine.
-
-Once you change the configuration in `fleet-location-updater.yml`, you must **refresh** the
-configuration by posting to the `/refresh` endpoint:
-
-	$ curl -d{} http://127.0.0.1:9007/refresh
-
-You can see configuration changes for the **fleet-location-updater** by going to `http://localhost:9007/env`
-
-[Git]: https://help.github.com/articles/set-up-git/
-[Hystrix]: https://github.com/Netflix/Hystrix
-[JDK 8]: http://www.oracle.com/technetwork/java/javase/downloads
-[Maven]: https://maven.apache.org/
-[MongoDB]: https://www.mongodb.org/
-[RabbitMQ]: https://www.rabbitmq.com/
-[Spring Cloud Config]: http://cloud.spring.io/spring-cloud-config/
+    fleet-dashboard.local.micropcf.io

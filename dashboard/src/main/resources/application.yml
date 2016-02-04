@@ -26,3 +26,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://eureka.cfapps.pez.pivotal.io/eureka/
+
+---
+spring:
+  profile: cloud
+
+security:
+  basic:
+    enabled: false

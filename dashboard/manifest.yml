@@ -1,0 +1,10 @@
+applications:
+- name: dashboard
+  host: fleet-dashboard
+  memory: 512MB
+  path: target/dashboard-1.0.0.BUILD-SNAPSHOT.jar
+  buildpack: java_buildpack
+  services:
+#    - zipkin
+    - configserver
+    - eureka
