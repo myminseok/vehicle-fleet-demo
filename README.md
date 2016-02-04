@@ -98,50 +98,31 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 ### deploying
 
-     visit each module directory and run folling
-     cf push
-
-**config server**
+     visit each module directory and run 'cf push'
 
 	$ cd platform/configserver
 	$ cf push
 
-**Eureka**
-
 	$ cd platform/eureka
 	$ cf push
-
-**hystrix-dashboard**
 
 	$ cd platform/hystrix-dashboard
 	$ cf push
 
-**fleet-location-simulator**
-
 	$ cd fleet-location-simulator
 	$ cf push
-
-**fleet-location-ingest**
 
 	$ cd fleet-location-ingest
 	$ cf push
 
-**fleet-location-updater**
-
     $ cd fleet-location-updater
     $ cf push
-
-**fleet-location-service**
 
 	$ cd fleet-location-service
 	$ cf push
 
-**service-location-service**
-
 	$ cd service-location-service
 	$ cf push
-
-**dashboard**
 
 	$ cd dashboard
 	$ cf push
@@ -153,19 +134,19 @@ If you go to the Eureka Dashboard, you should see all services registered and ru
 
 http://fleet-eureka-server.local.micropcf.io/
 
-* DASHBOARD
-* FLEET-LOCATION-INGEST
-* FLEET-LOCATION-SERVICE
-* FLEET-LOCATION-SIMULATOR
-* FLEET-LOCATION-UPDATER
-* SERVICE-LOCATION-SERVICE
+    * DASHBOARD
+    * FLEET-LOCATION-INGEST
+    * FLEET-LOCATION-SERVICE
+    * FLEET-LOCATION-SIMULATOR
+    * FLEET-LOCATION-UPDATER
+    * SERVICE-LOCATION-SERVICE
 
 Please ensure all services started successfully. Next, start the simulation using the `service-location-simulator` application,
 
     $ scripts/load.sh
 
 
-to see rabbitmq
+to see rabbitmq status
 
     http://rabbitmq_ip:15672/
 
