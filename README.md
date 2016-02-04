@@ -92,6 +92,9 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 ### Check out sources
 
+    several changes have been made from original for micropcf such as manifests.yml, application.yml, pom.xml,bootstrap.yml..
+    spring jpa setting for fleet-location-service in application.yml.
+
 	$ git clone https://github.com/myminseok/vehicle-fleet-demo.git
     $ cd vehicle-fleet-demo
 
