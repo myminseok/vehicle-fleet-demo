@@ -12,6 +12,11 @@ menu item.
 
 original document is here(https://github.com/springone2gx2015/vehicle-fleet-demo)
 
+![dashboard](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/dashboard.png)
+![rabbitmq](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/rabbitmq.png)
+![eureka](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/eureka.png)
+
+## Building
 
 ## deploy to micropcf
 
