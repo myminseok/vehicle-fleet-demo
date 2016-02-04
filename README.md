@@ -1,4 +1,4 @@
-Vehicle Fleet
+Vehicle Fleet for micropcf
 =============
 
 Demo system for RentMe fleet of connected rental trucks. Each truck in
@@ -17,7 +17,6 @@ screen shots
 ![rabbitmq](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/rabbitmq.png)
 ![eureka](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/eureka.png)
 
-## Building
 
 ## deploy to micropcf
 
@@ -43,13 +42,14 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 * [MongoDB][]
 * [RabbitMQ][]
 * MYSQL
+
     vi my.conf
     bind-address = IP_ADDR_MYSQL_SERVER
 
 
 
 
-### open outbound connectivity from container to external service
+### open outbound connectivity from cloudfoundry space to external service
     vi securityfile
     [{"destination": "0.0.0.0-255.255.255.255","protocol": "all"}]
 
@@ -86,7 +86,7 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 **eureka**
 
-    $ cf cups configserver -p  '{"uri":"http://fleet-eureka-server.local.micropcf.io/"}'
+    $ cf cups eureka -p  '{"uri":"http://fleet-eureka-server.local.micropcf.io/"}'
 
 ## deploy fleet services
 
@@ -97,7 +97,7 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 
 ### Compile, test and build all jars
-    you need java8
+    you need java 8
 
 	$ ./mvnw clean install
 
@@ -159,3 +159,6 @@ to see rabbitmq status
 to see dashboard
 
     fleet-dashboard.local.micropcf.io
+
+
+Enjoy!
