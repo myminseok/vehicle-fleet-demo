@@ -162,11 +162,11 @@ Please ensure all services started successfully. Next, start the simulation usin
 
 to see rabbitmq status
 
-    http://rabbitmq_ip:15672/
+http://rabbitmq_ip:15672/
 
 to see dashboard
 
-    fleet-dashboard.local.micropcf.io
+http://fleet-dashboard.local.micropcf.io
 
 
 Enjoy!
