@@ -4,8 +4,9 @@ applications:
   path: target/fleet-eureka-server-1.0.0.BUILD-SNAPSHOT.jar
   buildpack: java_buildpack
   timeout: 180
-  env:
-      CF_TARGET: https://api.local.micropcf.io
+#  env:
+#      CF_TARGET: https://api.local.micropcf.io
   services:
       - configserver
+
 

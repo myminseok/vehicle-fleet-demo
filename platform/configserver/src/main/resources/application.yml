@@ -20,8 +20,8 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/mstine/config-repo 
-          basedir: target/config2
+          uri: https://github.com/myminseok/vehicle-fleet-demo
+          basedir: test
 
 ---
 spring:
@@ -33,7 +33,7 @@ eureka:
     nonSecurePort: 80
   client:
     serviceUrl:
-      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:${eureka.password:}@${PREFIX:}eureka.${application.domain:cfapps.io}}/eureka/
+      defaultZone: ${vcap.services.eureka.credentials.uri:http://user:${eureka.password:}@${PREFIX:}eureka.${application.domain:cfapps.io}}/eureka/
 
 ---
 spring:
