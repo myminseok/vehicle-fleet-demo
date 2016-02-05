@@ -181,14 +181,14 @@ http://fleet-dashboard.local.micropcf.io
 Enjoy!
 
 
-## trouble shooting.
+## Trouble shooting.
 
-### spring cloud configserver should run first without error.
+**spring cloud configserver should run first without error**
 
         http://configserver.local.micropcf.io/admin/health
         cf logs configserver
 
-### see if each APP starts up without error.
+**each APP should start up without error**
 
         should start with the RIGHT configserver that is http://configserver.local.micropcf.io/,  not http://localhost:8761/
 
@@ -203,10 +203,11 @@ Enjoy!
         2016-02-05T10:02:54.25+0900 [APP/0]      OUT   '  |____| .__|_| |_|_| |_\__, | / / / /
         2016-02-05T10:02:54.25+0900 [APP/0]      OUT  =========|_|==============|___/=/_/_/_/
         2016-02-05T10:02:54.25+0900 [APP/0]      OUT  :: Spring Boot ::        (v1.3.0.RELEASE)
-        2016-02-05T10:02:54.29+0900 [APP/0]      OUT 2016-02-05 01:02:54.299  INFO 23 --- [trace=,span=] [           main] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at: http://configserver.local.micropcf.io/
+        2016-02-05T10:02:54.29+0900 [APP/0]      OUT 2016-02-05 01:02:54.299  INFO 23 --- [trace=,span=] [
+        main] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at: http://configserver.local.micropcf.io/
         2016-02-05T10:02:54.65+0900 [HEALTH/0]   OUT healthcheck failed
 
-### should start without any connection error.
+**check connectivity from container to external service**
 
         if there is connection problem from container to external service(rabbitmq, mongodb, mysql) in the logs,
         then check connectivity.
@@ -222,4 +223,6 @@ Enjoy!
         if there is no return or hung, then check external process or security_group of micropcf space.
 
 
-### see if all process is registered into eureka app.
+**check app registration to eureka **
+
+        http://fleet-eureka-server.local.micropcf.io/
