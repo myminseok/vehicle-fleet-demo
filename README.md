@@ -174,3 +174,46 @@ http://fleet-dashboard.local.micropcf.io
 
 
 Enjoy!
+
+
+## trouble shooting.
+
+### spring cloud configserver should run first without error.
+
+        http://configserver.local.micropcf.io/admin/health
+        cf logs configserver
+
+### see if each APP starts up without error.
+
+#### should start with the RIGHT configserver that is http://configserver.local.micropcf.io/,  not http://localhost:8761/
+
+        cf logs APP_NAME
+        ex) cf logs fleet-location-service
+
+
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT   .   ____          _            __ _ _
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT   '  |____| .__|_| |_|_| |_\__, | / / / /
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT  =========|_|==============|___/=/_/_/_/
+        2016-02-05T10:02:54.25+0900 [APP/0]      OUT  :: Spring Boot ::        (v1.3.0.RELEASE)
+        2016-02-05T10:02:54.29+0900 [APP/0]      OUT 2016-02-05 01:02:54.299  INFO 23 --- [trace=,span=] [           main] c.c.c.ConfigServicePropertySourceLocator : Fetching config from server at: http://configserver.local.micropcf.io/
+        2016-02-05T10:02:54.65+0900 [HEALTH/0]   OUT healthcheck failed
+
+### should start without any connection error.
+
+        if there is connection problem from container to external service(rabbitmq, mongodb, mysql) in the logs, then check connectivity.
+
+        1) ssh into container by putting '-k' option to skip validation
+        cf ssh APP_NAME -k
+
+        2) doing 'curl' should return some message from external target
+
+        vcap@bv553k6mega:~$ curl 192.168.67.2:3306
+        5.5.47-0ubuntu0.14.04.1+[pFI|ToR??+}Wz$@Te#xX,mysql_native_password!??#08S01Got packets out of ordervcap@bv553k6mega:~$
+
+        if there is no return or hung, then check external process or security_group of micropcf space.
+
+
+### see if all process is registered into eureka app.
