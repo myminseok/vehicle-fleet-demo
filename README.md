@@ -185,7 +185,7 @@ Enjoy!
 
 ### see if each APP starts up without error.
 
-#### should start with the RIGHT configserver that is http://configserver.local.micropcf.io/,  not http://localhost:8761/
+        should start with the RIGHT configserver that is http://configserver.local.micropcf.io/,  not http://localhost:8761/
 
         cf logs APP_NAME
         ex) cf logs fleet-location-service
