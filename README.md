@@ -48,10 +48,12 @@ you need to increase memory to 8192MB by editing Vagrantfile.
     bind-address = IP_ADDR_MYSQL_SERVER
 
 
-
-
 ### open outbound connectivity from cloudfoundry space to external service
+
+create a file 
+
     vi securityfile
+
     [{"destination": "0.0.0.0-255.255.255.255","protocol": "all"}]
 
     cf create-security-group open_all securityfile
@@ -59,10 +61,9 @@ you need to increase memory to 8192MB by editing Vagrantfile.
     cf bind-staging-security-group open_all
     cf bind-running-security-group  open_all
 
-
 ### create user provided service
 
-    # in mysql, set user and give privileges
+in mysql, set user and give privileges
 
     use mysql;
     grant all privileges on *.* to root@'%' with grant option;
@@ -71,16 +72,21 @@ you need to increase memory to 8192MB by editing Vagrantfile.
     create database fleet;
 
 **mysql-db**
-    replace MYSQL_IP to yours
+
+replace MYSQL_IP to yours
+
     $ cf create-user-provided-service mysql-db -p '{"uri":"mysql://root:changeme@MYSQL_IP:3306/fleet"}'
 
 **mongodb**
-    replace MONGO_DB_IP to yours
+
+replace MONGO_DB_IP to yours
+
     $ cf cups mongodb -p '{"uri":"mongodb://MONGO_DB_IP:27017/locations"}'
 
 **rabbitmq**
-    replace RABBITMQ_IP to yours
-    don't forget to the postfix '%2f'. see https://www.rabbitmq.com/uri-spec.html
+
+replace RABBITMQ_IP to yours
+don't forget to the postfix '%2f'. see https://www.rabbitmq.com/uri-spec.html
 
     $ cf cups rabbitmq -p '{"uri":"amqp://guest:guest@RABBITMQ_IP:5672/%2f"}'
 
@@ -96,23 +102,23 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 ### Check out sources
 
-    several changes have been made from original for micropcf such as manifests.yml, application.yml, pom.xml,bootstrap.yml..
-    spring jpa setting for fleet-location-service in application.yml.
+several changes have been made from original for micropcf such as manifests.yml, application.yml, pom.xml,bootstrap.yml..
+spring jpa setting for fleet-location-service in application.yml.
 
-	$ git clone https://github.com/myminseok/vehicle-fleet-demo.git
-    $ cd vehicle-fleet-demo
+    $ git clone https://github.com/myminseok/vehicle-fleet-demo.git
 
 
 ### Compile, test and build all jars
-    you need java 8
+
+you need java 8
 
 	$ ./mvnw clean install
 
 
 ### deploying
 
-    visit each module directory and run 'cf push'. (timeout 180 sec in manifests.yml)
-    make sure there is no error by monitoring 'cf logs'
+visit each module directory and run 'cf push'. (timeout 180 sec in manifests.yml)
+make sure there is no error by monitoring 'cf logs'
 
 	$ cd platform/configserver
 	$ cf push
@@ -251,3 +257,4 @@ Enjoy!
 **check app registration to eureka**
 
         http://fleet-eureka-server.local.micropcf.io/
+ 
