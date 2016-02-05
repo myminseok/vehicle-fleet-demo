@@ -70,15 +70,15 @@ you need to increase memory to 8192MB by editing Vagrantfile.
     create database fleet;
 
 **mysql-db**
-
+    replace MYSQL_IP to yours
     $ cf create-user-provided-service mysql-db -p '{"uri":"mysql://root:changeme@MYSQL_IP:3306/fleet"}'
 
 **mongodb**
-
+    replace MONGO_DB_IP to yours
     $ cf cups mongodb -p '{"uri":"mongodb://MONGO_DB_IP:27017/locations"}'
 
 **rabbitmq**
-
+    replace RABBITMQ_IP to yours
     don't forget to the postfix '%2f'. see https://www.rabbitmq.com/uri-spec.html
 
     $ cf cups rabbitmq -p '{"uri":"amqp://guest:guest@RABBITMQ_IP:5672/%2f"}'
@@ -208,10 +208,11 @@ Enjoy!
 
 ### should start without any connection error.
 
-        if there is connection problem from container to external service(rabbitmq, mongodb, mysql) in the logs, then check connectivity.
+        if there is connection problem from container to external service(rabbitmq, mongodb, mysql) in the logs,
+        then check connectivity.
 
         1) ssh into container by putting '-k' option to skip validation
-        cf ssh APP_NAME -k
+        $ cf ssh APP_NAME -k
 
         2) doing 'curl' should return some message from external target
 
