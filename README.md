@@ -186,8 +186,27 @@ Enjoy!
 
 **spring cloud configserver should run first without error**
 
-        http://configserver.local.micropcf.io/admin/health
         cf logs configserver
+
+        http://configserver.local.micropcf.io/admin/health should show configServer > repositories > sources > https://...:
+
+        {
+        status: "UP",
+        configServer: {
+            status: "UP",
+            repositories: [
+            {
+                sources: [
+                "https://github.com/myminseok/vehicle-fleet-demo/application.yml"
+                ],
+                name: "app",
+                profiles: [
+                "default"
+                ],
+                label: null
+            }
+            ]
+
 
 **each APP should start up without error**
 
