@@ -110,20 +110,25 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
 ### deploying
 
-    visit each module directory and run 'cf push'.
+    visit each module directory and run 'cf push'. (timeout 180 sec in manifests.yml)
     make sure there is no error by monitoring 'cf logs'
 
 	$ cd platform/configserver
 	$ cf push
+	http://configserver.local.micropcf.io/admin/health
 
 	$ cd platform/eureka
 	$ cf push
+	$ cf logs fleet-eureka-server
+	http://fleet-eureka-server.local.micropcf.io/
 
 	$ cd platform/hystrix-dashboard
 	$ cf push
+	http://fleet-hystrix-dashboard.local.micropcf.io
 
 	$ cd fleet-location-simulator
 	$ cf push
+	http://fleet-location-simulator.local.micropcf.io
 
 	$ cd fleet-location-ingest
 	$ cf push

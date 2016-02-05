@@ -84,6 +84,9 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- incase of SessionCreationPolicy error
+        java.lang.NoClassDefFoundError: org/springframework/security/config/http/SessionCreationPolicy
+        -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
@@ -92,6 +95,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 		</dependency>
+		<!-- incase of SessionCreationPolicy error -->
 	</dependencies>
 
 	<build>

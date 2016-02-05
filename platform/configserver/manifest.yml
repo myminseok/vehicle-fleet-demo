@@ -3,5 +3,6 @@ applications:
   memory: 378MB
   path: target/fleet-config-server-1.0.0.BUILD-SNAPSHOT.jar
   buildpack: java_buildpack
+  timeout: 180
 #  env:
 #    EUREKA_SERVICE_URL: http://fleet-eureka-server.local.micropcf.io

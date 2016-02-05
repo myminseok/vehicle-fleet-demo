@@ -3,8 +3,8 @@ applications:
   memory: 1GB
   path: target/fleet-location-updater-1.0.0.BUILD-SNAPSHOT.jar
   buildpack: java_buildpack
+  timeout: 180
   services:
     - rabbitmq
-#    - zipkin
     - configserver
     - eureka

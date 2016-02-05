@@ -3,8 +3,8 @@ applications:
   memory: 512MB
   path: target/fleet-location-ingest-1.0.0.BUILD-SNAPSHOT.jar
   buildpack: java_buildpack
+  timeout: 180
   services:
     - rabbitmq
-#    - zipkin
     - configserver
     - eureka
