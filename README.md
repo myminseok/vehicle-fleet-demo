@@ -81,7 +81,7 @@ you need to increase memory to 8192MB by editing Vagrantfile.
 
     don't forget to the postfix '%2f'. see https://www.rabbitmq.com/uri-spec.html
 
-    $ cf cups rabbitmq -p '{"uri":"amqp://guest:guest@192.168.67.2:5672/%2f"}'
+    $ cf cups rabbitmq -p '{"uri":"amqp://guest:guest@RABBITMQ_IP:5672/%2f"}'
 
 **config server**
 
