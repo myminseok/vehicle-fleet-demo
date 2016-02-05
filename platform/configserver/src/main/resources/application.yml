@@ -21,7 +21,7 @@ spring:
       server:
         git:
           uri: https://github.com/myminseok/config-repo
-          basedir: target/config2
+          basedir:
 
 ---
 spring:

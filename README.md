@@ -10,7 +10,8 @@ need a service are shown in orange or red depending on the urgency of
 the repairs. Service stations can be shown on the map by selecting a
 menu item.
 
-original document is here(https://github.com/springone2gx2015/vehicle-fleet-demo)
+this is refactored version for micropcf.
+the original sources are  here(https://github.com/springone2gx2015/vehicle-fleet-demo)
 screen shots
 
 ![dashboard](https://raw.githubusercontent.com/myminseok/vehicle-fleet-demo/master/dashboard.png)
@@ -181,7 +182,7 @@ http://fleet-dashboard.local.micropcf.io
 Enjoy!
 
 
-## Trouble shooting.
+## Trouble shooting
 
 **spring cloud configserver should run first without error**
 
@@ -223,6 +224,6 @@ Enjoy!
         if there is no return or hung, then check external process or security_group of micropcf space.
 
 
-**check app registration to eureka **
+**check app registration to eureka**
 
         http://fleet-eureka-server.local.micropcf.io/
