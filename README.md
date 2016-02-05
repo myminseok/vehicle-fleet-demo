@@ -184,6 +184,11 @@ Enjoy!
 
 ## Trouble shooting
 
+**this demo requires internet connection**
+
+        for DNS resolution
+        for configserver connection to git.
+
 **spring cloud configserver should run first without error**
 
         cf logs configserver
