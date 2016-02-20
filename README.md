@@ -257,4 +257,9 @@ Enjoy!
 **check app registration to eureka**
 
         http://fleet-eureka-server.local.micropcf.io/
+
+**vagrant box add error**
+       
+        when there is SSL error, then     
+        vagrant box add --insecure -c micropcf/base http://atlas.hashicorp.com/micropcf/boxes/base/versions/0.48.0/providers/virtualbox.box 
  
