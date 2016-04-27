@@ -2,7 +2,7 @@ applications:
 - name: fleet-location-service
   memory: 768MB
   path: target/fleet-location-service-1.0.0.BUILD-SNAPSHOT.jar
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
   timeout: 180
   services:
     - mysql-db

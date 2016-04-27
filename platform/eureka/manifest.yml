@@ -1,11 +1,11 @@
 applications:
-- name: fleet-eureka-server
+- name: fleet-eureka-server-mkim
   memory: 378MB
   path: target/fleet-eureka-server-1.0.0.BUILD-SNAPSHOT.jar
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
   timeout: 180
 #  env:
-#      CF_TARGET: https://api.local.micropcf.io
+#    CF_TARGET: https://api.local.micropcf.io
   services:
       - configserver
 

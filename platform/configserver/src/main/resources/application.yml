@@ -20,8 +20,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/myminseok/vehicle-fleet-demo
-          basedir: test
+          uri: https://github.com/myminseok/vehicle-fleet-config
 
 ---
 spring:

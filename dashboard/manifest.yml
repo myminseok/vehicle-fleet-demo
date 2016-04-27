@@ -3,7 +3,7 @@ applications:
   host: fleet-dashboard
   memory: 512MB
   path: target/dashboard-1.0.0.BUILD-SNAPSHOT.jar
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
   timeout: 180
   services:
     - configserver

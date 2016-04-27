@@ -2,6 +2,6 @@ applications:
 - name: configserver 
   memory: 378MB
   path: target/fleet-config-server-1.0.0.BUILD-SNAPSHOT.jar
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
   timeout: 180
 

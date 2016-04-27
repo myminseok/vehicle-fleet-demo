@@ -2,7 +2,7 @@ applications:
 - name: fleet-location-updater
   memory: 1GB
   path: target/fleet-location-updater-1.0.0.BUILD-SNAPSHOT.jar
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
   timeout: 180
   services:
     - rabbitmq
